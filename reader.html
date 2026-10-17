@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading - Novel Reader</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:wght@300;400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="reader-container">
+        <nav class="reader-nav">
+            <button onclick="backToLibrary()" class="back-btn">← Kembali</button>
+            <h2 id="novelTitle"></h2>
+            <div class="reader-controls">
+                <button onclick="changeFontSize(-1)" title="Perkecil Font">A-</button>
+                <button onclick="changeFontSize(1)" title="Perbesar Font">A+</button>
+                <select id="fontFamily" onchange="changeFont(this.value)">
+                    <option value="Merriweather">Merriweather</option>
+                    <option value="Lora">Lora</option>
+                    <option value="Poppins">Poppins</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                </select>
+                <button onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+            </div>
+        </nav>
+
+        <div class="chapter-info">
+            <h3 id="chapterTitle"></h3>
+            <span id="chapterNumber"></span>
+        </div>
+
+        <div id="chapterContent" class="chapter-content"></div>
+
+        <div class="chapter-navigation">
+            <button id="prevBtn" onclick="previousChapter()" class="nav-btn">← Bab Sebelumnya</button>
+            <select id="chapterSelect" onchange="jumpToChapter(this.value)"></select>
+            <button id="nextBtn" onclick="nextChapter()" class="nav-btn">Bab Selanjutnya →</button>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="reader.js"></script>
+</body>
+      </html>
