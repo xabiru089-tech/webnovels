@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Tambah Novel</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .admin-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #667eea;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .chapter-list {
+            margin-top: 20px;
+        }
+        
+        .chapter-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .chapter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #229954;
+        }
+        
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .preview-cover {
+            width: 200px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="admin-container">
+        <a href="index.html" class="back-link">← Kembali ke Library</a>
+        
+        <div class="admin-header">
+            <h1>📝 Tambah Novel Baru</h1>
+            <p>Isi form di bawah untuk membuat novel baru</p>
+        </div>
+        
+        <form id="novelForm">
+            <div class="form-group">
+                <label for="novelTitle">Judul Novel *</label>
+                <input type="text" id="novelTitle" required placeholder="Masukkan judul novel...">
+            </div>
+            
+            <div class="form-group">
+                <label for="novelGenre">Genre *</label>
+                <select id="novelGenre" required>
+                    <option value="">Pilih Genre</option>
+                    <option value="romance">Romance</option>
+                    <option value="harem">Harem</option>
+                    <option value="fantasy">Fantasy</option>
+                    <option value="action">Action</option>
+                    <option value="mystery">Mystery</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="drama">Drama</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="novelCover">URL Sampul Novel (opsional)</label>
+                <input type="url" id="novelCover" placeholder="https://example.com/cover.jpg">
+                <small style="color: #666;">Kosongkan jika tidak ada gambar. Bisa pakai link dari Unsplash atau upload ke GitHub.</small>
+                <img id="coverPreview" class="preview-cover" alt="Preview">
+            </div>
+            
+            <div class="form-group">
+                <label for="novelDescription">Deskripsi Novel</label>
+                <textarea id="novelDescription" placeholder="Tulis deskripsi singkat tentang novel ini..."></textarea>
+            </div>
+            
+            <hr style="margin: 30px 0; border: none; border-top: 2px solid #eee;">
+            
+            <h2 style="color: #667eea; margin-bottom: 20px;">📚 Daftar Bab</h2>
+            
+            <div id="chaptersList" class="chapter-list"></div>
+            
+            <button type="button" onclick="addChapter()" class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                ➕ Tambah Bab Baru
+            </button>
+            
+            <div class="actions">
+                <button type="submit" class="btn btn-success">💾 Simpan Novel</button>
+                <button type="button" onclick="resetForm()" class="btn btn-danger">🔄 Reset Form</button>
+            </div>
+        </form>
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="admin.js"></script>
+</body>
+              </html>
